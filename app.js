@@ -1,16 +1,34 @@
 const express = require("express");
 const cors = require("cors");
 const app = express();
+require("dotenv").config();
 
 //middleware
 app.use(cors());
+app.use(express.json()); // Middleware to parse JSON bodies
 
-const port = 8000;
-
+const port = process.env.LOCAL_PORT || 3000; // port from environment variable or default to 3000
 app.get("/", (req, res) => {
-  res.send("Hi Samsu! How are you?");
+  res.json({ message: "Hi Samsu! How are you?" });
 });
 
 app.listen(port, () => {
   console.log(`server is running at ${port}`);
 });
+
+// const winston = require("winston");
+// const { Loggly } = require("winston-loggly-bulk");
+
+// const logger = winston.createLogger({
+//   transports: [
+//     new winston.transports.Console(),
+//     new Loggly({
+//       token: "YOUR_LOGGLY_TOKEN",
+//       subdomain: "YOUR_LOGGLY_SUBDOMAIN",
+//       tags: ["Winston-NodeJS"],
+//       json: true,
+//     }),
+//   ],
+// });
+
+// logger.info("Hello, this is a log message!");
