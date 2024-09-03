@@ -7,7 +7,7 @@ require("dotenv").config();
 app.use(cors());
 app.use(express.json()); // Middleware to parse JSON bodies
 
-const port = process.env.LOCAL_PORT || 3000; // port from environment variable or default to 3000
+const port = process.env.LOCAL_PORT || 3000; // environment variable or default to 3000
 app.get("/", (req, res) => {
   res.json({ message: "Hi Samsu! How are you?" });
 });
