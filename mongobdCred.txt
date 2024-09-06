@@ -1,0 +1,6 @@
+3. Add your connection string into your application code
+mongodb+srv://biosamsuddin:<db_password>@cluster0.tfwgo.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0
+
+
+usrname-biosamsuddin
+password ---  RVkDpDBLTPcTEfrY
