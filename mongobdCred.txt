@@ -1,6 +1,20 @@
-3. Add your connection string into your application code
-mongodb+srv://biosamsuddin:<db_password>@cluster0.tfwgo.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0
 
 
-usrname-biosamsuddin
-password ---  RVkDpDBLTPcTEfrY
+
+
+DATABASE_URL='mongodb+srv://biosamsuddin:RVkDpDBLTPcTEfrY@cluster0.tfwgo.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0'
+
+#username for the Bus ticket booking app in mongoDb- biosamsuddin
+#password- RVkDpDBLTPcTEfrY
+
+
+
+# mongosh "mongodb+srv://cluster0.tfwgo.mongodb.net/" --apiVersion 1 --username <db_username>
+# 2. Copy the connection string, then open MongoDB Compass   
+# mongodb+srv://biosamsuddin:<db_password>@cluster0.tfwgo.mongodb.net/
+
+
+
+# 3.Monggose Add your connection string into your application code
+# mongodb+srv://biosamsuddin:<db_password>@cluster0.tfwgo.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0
+
