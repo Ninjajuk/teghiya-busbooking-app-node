@@ -1,8 +1,14 @@
 const routeHelper = {
-  generateUniqueRouteId: async (startLocation, endLocation) => {
-    const start = `${startLocation.city}-${startLocation.state}`;
-    const end = `${endLocation.city}-${endLocation.state}`;
-    return `${start}--${end}`;
+  generateUniqueRouteId: (startLocation, endLocation) => {
+    // Function to format city names by removing spaces and converting to lowercase
+    const formatLocation = (location) => {
+      return location.city.replace(/\s+/g, "").toUpperCase();
+    };
+
+    const start = formatLocation(startLocation);
+    const end = formatLocation(endLocation);
+
+    return `${start}-${end}`;
   },
 };
 module.exports = routeHelper;

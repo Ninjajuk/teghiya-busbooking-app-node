@@ -1,19 +1,27 @@
-// const { MongoClient } = require("mongodb");
-const mongoose = require("mongoose");
-require("dotenv").config();
+const Route = require("../model/route");
 
-const uri = process.env.DATABASE_URL;
+const db = {
+  findone: async (routeId) => {
+    try {
+      const routeExists = await Route.findOne({ routeId });
+      if (routeExists) {
+        return {
+          code: 400,
+          message:
+            "Duplicate routeId: A route with the same start and end location already exists",
+        };
+      }
+      return { code: 200 }; // Return 200 if no route exists
+    } catch (error) {
+      console.error("Error occurred while checking route:", error);
+      return {
+        code: 500,
+        message: "An error occurred while checking the route",
+      };
+    }
+  },
+};
 
-// Create a new MongoClient
-// const client = new MongoClient(uri);
+module.exports = db;
 
-async function connectToDb() {
-  try {
-    await mongoose.connect(process.env.DATABASE_URL); //Connection using mongoose
-    // await client.connect(); // Connect the client to the server
-    console.log("Connected successfully to MongoDB");
-  } catch (error) {
-    console.error("Error connecting to MongoDB:", error);
-  }
-}
-module.exports = connectToDb;
+

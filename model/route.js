@@ -3,6 +3,7 @@ const { Schema } = mongoose;
 const routeSchema = new Schema(
   {
     routeId: { type: String, unique: true, required: true }, // Unique route identifier
+   // clientId: { type: String, required: true }, // Client ID to identify client
     routeName: { type: String },
     startLocation: {
       city: String,

@@ -27,3 +27,12 @@ const handleErrorByAPI = (errorCode, path) => {
   }
   return response;
 };
+
+const handleRoute = (errorCode, response) => {
+  switch (errorCode) {
+    case "10": {
+      response.reason = "Failed";
+      break;
+    }
+  }
+};

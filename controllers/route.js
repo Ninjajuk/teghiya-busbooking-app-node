@@ -1,35 +1,80 @@
 const Route = require("../model/route");
 const errorHandler = require("../utils/schemaErrorHandler");
 const routeHelper = require("../helpers/routehelper");
+const db = require("../database/db");
+
+const routeController={
+
+}
 
 // Create a new route
 exports.createRoute = async (req, res) => {
   try {
+    //Validate incoming Data
+    // const validateRoute= await handlevalidateRoutes(req)
     const { startLocation, endLocation } = req.body;
-
     // Generate a unique ID
-    const routeId = routeHelper.generateUniqueRouteId(
-      startLocation,
-      endLocation
-    );
-    console.log(routeId);
+    const routeId = routeHelper.generateUniqueRouteId(startLocation,endLocation);
 
-    const route = new Route(req.body);
-    // console.log("Checking route instance:", route); // Log the route instance
+    // Check if a route with the same ID already exists in the database
+    const result = await db.findone(routeId);
+    if (result.code === 400) return res.json({ result: result.message });
+    if (result.code === 500) return res.json({ result: result.message });
 
-    // await route.save();
-    // console.log("Route saved successfully");
+    // Create and save the new route
+    const route = new Route({ ...req.body, routeId });
+    await route.save();
+    res.status(201).json({ message: "Successfully added New Route", data: route });
 
-    res.status(201).json(route);
   } catch (error) {
     errorHandler(error, res);
   }
 };
 
-exports.allRoutes = async (req, res) => {
-  try {
-    res.json({ message: "all routes" });
-  } catch (error) {
-    res.status(400).json({ error: error.message });
-  }
-};
+
+
+// Get all routes
+exports.getAllRoutes = async (req, res) => {
+    try {
+    
+      const routes = await Route.find(); // Add filters as needed
+      res.status(200).json(routes);
+    } catch (error) {
+      res.status(500).json({ error: error.message });
+    }
+  };
+  
+  // Get a specific route
+  exports.getRouteById = async (req, res) => {
+    try {
+        const {routeId}=req.body
+        // console.log(routeId)
+      const route = await Route.findOne({routeId});
+      if (!route) return res.status(404).json({ message: 'Route not found' });
+      res.status(200).json(route);
+    } catch (error) {
+      res.status(500).json({ error: error.message ,reason:'not found'});
+    }
+  };
+  
+  // Update a route
+  exports.updateRoute = async (req, res) => {
+    try {
+      const route = await Route.findByIdAndUpdate(req.params.id, req.body, { new: true });
+      if (!route) return res.status(404).json({ message: 'Route not found' });
+      res.status(200).json(route);
+    } catch (error) {
+      res.status(400).json({ error: error.message });
+    }
+  };
+  
+  // Delete a route
+  exports.deleteRoute = async (req, res) => {
+    try {
+      const route = await Route.findByIdAndDelete(req.params.id);
+      if (!route) return res.status(404).json({ message: 'Route not found' });
+      res.status(200).json({ message: 'Route deleted successfully' });
+    } catch (error) {
+      res.status(500).json({ error: error.message });
+    }
+  };
