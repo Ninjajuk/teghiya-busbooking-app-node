@@ -3,18 +3,25 @@ const cors = require("cors");
 const app = express();
 require("dotenv").config();
 const connectToDb = require("./database/db");
+const RouteManage = require("./routes/route");
+
 //middleware
 app.use(cors());
 app.use(express.json()); // Middleware to parse JSON bodies
 
 const port = process.env.LOCAL_PORT || 3000; // environment variable or default to 3000
 
+app.use("/", RouteManage);
+
 app.get("/", (req, res) => {
-  res.json({ message: "Hi Samsu! How are you? I Love ajuk" });
+  res.json({
+    message: "Hi Samsu! How are you? I Love ajuk",
+    originalUrl: req.originalUrl,
+  });
 });
 
 connectToDb();
-app.listen(port, () => {
+app.listen(port, async () => {
   console.log(`server is running at ${port}`);
 });
 
