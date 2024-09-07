@@ -16,7 +16,7 @@ app.use("/", ScheduleManage);
 
 app.get("/", (req, res) => {
   res.json({
-    message: "Hi Samsu! How are you? I Love ajuk",
+    message: " I Love ajuk",
     originalUrl: req.originalUrl,
   });
 });
