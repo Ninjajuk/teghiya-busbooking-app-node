@@ -1,9 +1,9 @@
 const express=require('express')
-const { createBus } = require('../controllers/Bus')
+const { addNewBus } = require('../controllers/Bus')
 
 const router=express.Router()
 
-router.post('/api/v1/createBus',createBus)
+router.post('/api/v1/addNewBus',addNewBus)
 
 
 module.exports=router

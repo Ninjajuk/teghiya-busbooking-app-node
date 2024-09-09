@@ -1,8 +1,11 @@
 const Bus = require('../model/bus');
-
+const { v4: uuidv4 } = require('uuid');
 // Create a new bus
-exports.createBus = async (req, res) => {
+exports.addNewBus = async (req, res) => {
   try {
+    // Generate a new UUID
+    const newBusId = uuidv4();
+    req.body.busId=newBusId
     const newBus = new Bus(req.body); // Create a new bus with the data from the request body
     await newBus.save(); // Save the new bus to the database
     res.status(201).json({ message: 'Bus created successfully', data: newBus });
