@@ -5,6 +5,7 @@ require("dotenv").config();
 const connectToDb = require("./config/mongoDb");
 const RouteManage = require("./routes/route");
 const ScheduleManage= require('./routes/schedule')
+const BusManage= require('./routes/bus')
 //middleware
 app.use(cors());
 app.use(express.json()); // Middleware to parse JSON bodies
@@ -13,6 +14,7 @@ const port = process.env.LOCAL_PORT || 3000; // environment variable or default 
 
 app.use("/", RouteManage);
 app.use("/", ScheduleManage);
+app.use("/", BusManage);
 
 app.get("/", (req, res) => {
   res.json({
