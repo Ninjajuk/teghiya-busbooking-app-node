@@ -16,7 +16,7 @@ app.use("/", ScheduleManage);
 
 app.get("/", (req, res) => {
   res.json({
-    message: " I Love ajuk",
+    message: " I Love JavaScript",
     originalUrl: req.originalUrl,
   });
 });
