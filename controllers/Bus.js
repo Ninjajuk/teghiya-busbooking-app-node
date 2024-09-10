@@ -1,6 +1,8 @@
 const Bus = require('../model/bus');
 const { v4: uuidv4 } = require('uuid');
-// Create a new bus
+
+
+// ADD a new bus
 exports.addNewBus = async (req, res) => {
   try {
     // Generate a new UUID
