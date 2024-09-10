@@ -5,6 +5,7 @@ const { v4: uuidv4 } = require('uuid');
 // ADD a new bus
 exports.addNewBus = async (req, res) => {
   try {
+    
     // Generate a new UUID
     const newBusId = uuidv4();
     req.body.busId=newBusId
