@@ -1,6 +1,7 @@
 const express = require("express");
 const cors = require("cors");
 const app = express();
+
 require("dotenv").config();
 const connectToDb = require("./config/mongoDb");
 const RouteManage = require("./routes/route");

@@ -15,6 +15,7 @@ const handleErrorByAPI = (errorCode, path) => {
     code: errorCode,
     reason: "An application Error has occured",
   };
+  
   //handle the case based on the api
   switch (api) {
     case "routes": {
