@@ -18,7 +18,7 @@ exports.addNewBus = async (req, res) => {
 };
 
 // Get all buses
-exports.getAllBuses = async (req, res) => {
+exports.getAllBus = async (req, res) => {
   try {
     const buses = await Bus.find(); // Find all buses in the database
     res.status(200).json(buses);
@@ -30,7 +30,7 @@ exports.getAllBuses = async (req, res) => {
 // Get a bus by ID
 exports.getBusById = async (req, res) => {
   try {
-    const bus = await Bus.findById(req.params.id); // Find the bus by its ID
+    const bus = await Bus.find(req.params.id); // Find the bus by its ID
     if (!bus) {
       return res.status(404).json({ message: 'Bus not found' });
     }
