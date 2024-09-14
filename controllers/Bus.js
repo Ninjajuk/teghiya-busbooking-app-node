@@ -21,7 +21,8 @@ exports.addNewBus = async (req, res) => {
 exports.getAllBus = async (req, res) => {
   try {
     const buses = await Bus.find(); // Find all buses in the database
-    res.status(200).json(buses);
+    
+    res.status(200).json({buses,originalUrl: req.originalUrl,path:req.path});
   } catch (error) {
     res.status(500).json({ message: 'Failed to retrieve buses', error: error.message });
   }

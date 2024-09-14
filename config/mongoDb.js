@@ -18,11 +18,11 @@ async function connectToDb() {
     console.log("Connected successfully to MongoDB");
 
         // Connect to Redis
-        await redisClient.connect();
-        console.log(`Connected successfully to Redis at port ${process.env.REDIS_URL}`);
+        // await redisClient.connect();
+        // console.log(`Connected successfully to Redis at port ${process.env.REDIS_URL}`);
     
         // Handling Redis errors
-        redisClient.on("error", (err) => console.log("Redis Client Error", err));
+        // redisClient.on("error", (err) => console.log("Redis Client Error", err));
   } catch (error) {
     console.error("Error connecting to MongoDB:", error);
   }
