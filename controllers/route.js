@@ -1,4 +1,5 @@
 const Route = require("../model/route");
+ const PickUpAndDropPoints = require ('../model/PickupDropPointSchema')
 const errorHandler = require("../utils/schemaErrorHandler");
 const routeHelper = require("../helpers/routehelper");
 const db = require("../database/db");
@@ -78,3 +79,16 @@ exports.getAllRoutes = async (req, res) => {
       res.status(500).json({ error: error.message });
     }
   };
+
+  exports.addPickUpAndDropPoints = async (req,res) =>{
+    try {
+      const pickUpAndDropPoint  = new PickUpAndDropPoints (req.body)
+
+      await pickUpAndDropPoint.save()
+      res.status(200).json({message:'Added Successfully',
+        data:pickUpAndDropPoint
+      })
+    } catch (error) {
+      res.status(400).json({error:'error adding pick and drop points'})
+    }
+  }

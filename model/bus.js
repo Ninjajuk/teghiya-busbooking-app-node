@@ -115,6 +115,11 @@ module.exports= mongoose.model('Bus',BusSchema)
 // reservedBy: { type: String, ref: 'User' }, // If reserved, who reserved it (future use case)
 // currentRouteId: { type: String, ref: 'Route' }, // Currently assigned route (if active)
 
-
+// "operationalStatus": {
+//   "type": "String",
+//   "enum": ["Active", "Inactive", "Under Maintenance", "Retired"],
+//   "default": "Active",
+//   "description": "Current operational status of the bus."
+// },
 
 // }
