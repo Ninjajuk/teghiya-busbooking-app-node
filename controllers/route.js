@@ -82,7 +82,7 @@ exports.getAllRoutes = async (req, res) => {
 
   exports.addPickUpAndDropPoints = async (req,res) =>{
     try {
-      const pickUpAndDropPoint  = new PickUpAndDropPoints (req.body)
+      const pickUpAndDropPoint  = new PickUpAndDropPoints(req.body)
 
       await pickUpAndDropPoint.save()
       res.status(200).json({message:'Added Successfully',
