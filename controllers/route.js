@@ -81,7 +81,14 @@ exports.getAllRoutes = async (req, res) => {
   };
 
   exports.addPickUpAndDropPoints = async (req,res) =>{
+
     try {
+      const {routeId} = req.body
+      const checkExistingRoute = await Route.findById(routeId)
+
+      if(checkExistingRoute) {
+        return res.json({data:'This Route Id already exist',checkExistingRoute})
+      }
       const pickUpAndDropPoint  = new PickUpAndDropPoints(req.body)
 
       await pickUpAndDropPoint.save()
