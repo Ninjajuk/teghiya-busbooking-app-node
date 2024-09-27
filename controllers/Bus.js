@@ -31,7 +31,7 @@ exports.getAllBus = async (req, res) => {
 // Get a bus by ID
 exports.getBusById = async (req, res) => {
   try {
-    const bus = await Bus.find(req.params.id); // Find the bus by its ID
+    const bus = await Bus.findOne(req.params.id); // Find the bus by its ID
     if (!bus) {
       return res.status(404).json({ message: 'Bus not found' });
     }
@@ -67,4 +67,22 @@ exports.deleteBus = async (req, res) => {
   }
 };
 
+
+exports.testPerformance = async(req,res) =>{
+  try {
+    const [data1,data2] =await Promise.all([fetch('https://dummyjson.com/products/1'),fetch('https://dummyjson.com/users/1')])
+    const resp1 =await data1.json()
+    const resp2 =await data2.json()
+    res.status(200).json({data1:resp1?.title,data2:resp2?.address?.state,})
+
+    // const resp1 = await fetch('https://dummyjson.com/products/1')
+    // const data1 = await resp1.json()
+
+    // const resp2 = await fetch('https://dummyjson.com/products/1')
+    // const data2 = await resp2.json()
+    // res.status(200).json({data1:data1,data2:data2,})
+  } catch (error) {
+    console.error('error',error)
+  }
+}
 
