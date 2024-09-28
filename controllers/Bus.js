@@ -2,7 +2,7 @@ const Bus = require('../model/bus');
 const Route = require('../model/route');
 const { v4: uuidv4 } = require('uuid');
 const { sendErrorHandler } = require('../utils/errorCode');
-
+const {helper}  =require ('../helpers/bushelper')
 
 // ADD a new bus
 exports.addNewBus = async (req, res) => {
@@ -33,7 +33,8 @@ exports.getAllBus = async (req, res) => {
 // Get a bus by ID
 exports.getBusById = async (req, res) => {
   try {
-    const bus = await Bus.findOne(req.params.id); // Find the bus by its ID
+    const {busId} = req.body
+    const bus = await Bus.findOne({busId:busId}); // Find the bus by its ID
     if (!bus) {
       return res.status(404).json({ message: 'Bus not found' });
     }
@@ -94,12 +95,16 @@ exports.busSearch = async (req, res) => {
     // const { startLocation, endLocation } = req.body
     // const routeId = 'SHIMLA-DEHRADUN'
     const { routeId } = req.body;
-    // find route details from routeId  or route name
-    const routeName = await Route.findOne({ routeId: routeId })
-    if (!routeName) {
-     res.json(sendErrorHandler('101',req)) 
-      // res.json({ data: 'Route does not exist' })
+    if(!routeId){
+      return res.json(sendErrorHandler('101',req)) 
     }
+    
+    // find route details from routeId  or route name
+    const routeName = await helper.getRouteById(routeId,req,res)
+
+    if(routeName.code) return routeName
+
+    res.json({data:routeName}) 
   } catch (error) {
     res.json({ error: error.message })
   }

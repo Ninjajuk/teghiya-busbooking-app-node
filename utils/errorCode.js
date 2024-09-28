@@ -47,7 +47,19 @@ const handleRoute = (errorCode, response) => {
 const handleBusSearch = (errorCode, response) => {
   switch (errorCode) {
     case "101": {
+      response.reason = "Route Id should not be empty";
+      break;
+    }
+    case "102": {
       response.reason = "Route does not exist";
+      break;
+    }
+    case "103": {
+      response.reason = "Does not find the Bus with the given Route does not exist";
+      break;
+    }
+    case "104": {
+      response.reason = "Error occured searching Bus";
       break;
     }
   }
