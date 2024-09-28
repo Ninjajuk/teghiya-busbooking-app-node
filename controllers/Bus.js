@@ -1,5 +1,7 @@
 const Bus = require('../model/bus');
+const Route = require('../model/route');
 const { v4: uuidv4 } = require('uuid');
+const { sendErrorHandler } = require('../utils/errorCode');
 
 
 // ADD a new bus
@@ -86,3 +88,19 @@ exports.testPerformance = async(req,res) =>{
   }
 }
 
+
+exports.busSearch = async (req, res) => {
+  try {
+    // const { startLocation, endLocation } = req.body
+    // const routeId = 'SHIMLA-DEHRADUN'
+    const { routeId } = req.body;
+    // find route details from routeId  or route name
+    const routeName = await Route.findOne({ routeId: routeId })
+    if (!routeName) {
+     res.json(sendErrorHandler('101',req)) 
+      // res.json({ data: 'Route does not exist' })
+    }
+  } catch (error) {
+    res.json({ error: error.message })
+  }
+}
