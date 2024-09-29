@@ -34,8 +34,8 @@ const busHelper = {
     getBusAndRouteDetails : async (req,checkSchedule) => {
         try {
             // const data = checkSchedule.map((item)=>{bus:item.busNumber,routeDetails:item.routeName})
-            const data = checkSchedule.map((item)=>item.busNumber)
-            if(!data) return sendErrorHandler('103', req)
+            const data = checkSchedule.map((item)=>item.routeName)
+            if(data.length===2) return sendErrorHandler('103', req)
             // if(data){
             //     const busDetails = await Bus.find({busName:})
             //     return  busDetails
