@@ -17,7 +17,7 @@ const BusSchema= new mongoose.Schema({
  
   // Route Details
   routeDetails: {
-    routeId: { type: mongoose.Schema.Types.ObjectId, ref: 'Route', required: true }, // Reference to the route
+    routeId: { type: mongoose.Schema.Types.ObjectId, ref: 'Route'}, // Reference to the route
     assigned: { type: Boolean, default: false }, // Bus currently assigned to a route
    // preferredRoutes: [{ type: String, ref: 'Route' }], // Buses may be preferred for specific routes
   },

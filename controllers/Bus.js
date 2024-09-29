@@ -2,7 +2,9 @@ const Bus = require('../model/bus');
 const Route = require('../model/route');
 const { v4: uuidv4 } = require('uuid');
 const { sendErrorHandler } = require('../utils/errorCode');
-const {helper}  =require ('../helpers/bushelper')
+const {busHelper}  =require ('../helpers/bushelper');
+const {schedulehelper}  =require ('../helpers/schdeulehelper');
+const { default: axios } = require('axios');
 
 // ADD a new bus
 exports.addNewBus = async (req, res) => {
@@ -90,21 +92,36 @@ exports.testPerformance = async(req,res) =>{
 }
 
 
+// exports.busSearch = async (req, res) => {
+
+//   try {
+//     // const routeName = 'DELHI-SHIMLA'
+//     const { routeName, dateOfJourney } = req.body;
+
+//     if (!routeName) {
+//       return res.json(sendErrorHandler('101', req))
+//     }
+
+//     // find route details from routeId  or route name
+//     const checkeRouteExist = await helper.getRouteById(routeName, req, res)
+//     if (checkeRouteExist.code) return res.status(400).json(checkeRouteExist)
+//     res.json({ data: 'success', })
+
+//   } catch (error) {
+//     res.json({ error: error.message })
+//   }
+// }
 exports.busSearch = async (req, res) => {
+
   try {
-    // const { startLocation, endLocation } = req.body
-    // const routeId = 'SHIMLA-DEHRADUN'
-    const { routeId } = req.body;
-    if(!routeId){
-      return res.json(sendErrorHandler('101',req)) 
-    }
-    
-    // find route details from routeId  or route name
-    const routeName = await helper.getRouteById(routeId,req,res)
+    const checkSchedule = await schedulehelper.getScheduleByDateAndRoute(req, res)
+    if (checkSchedule.code) return res.status(404).json(checkSchedule)
 
-    if(routeName.code) return routeName
+    //Get bus Details and Route details from the checkSchedule
+    const busDetails = await busHelper.getBusAndRouteDetails(req,checkSchedule)
+    if (busDetails.code) return res.status(404).json(busDetails)
 
-    res.json({data:routeName}) 
+    res.json({ data: busDetails})
   } catch (error) {
     res.json({ error: error.message })
   }

@@ -1,9 +1,10 @@
 const mongoose = require('mongoose');
 
 const ScheduleSchema = new mongoose.Schema({
-//   busId: { type: mongoose.Schema.Types.ObjectId, ref: 'Bus', required: true },
-  routeId: { type: mongoose.Schema.Types.ObjectId, ref: 'Route', required: true },
-  date: { type: Date, required: true },
+  busNumber: { type: String, required: true},
+  routeName: { type:String, required: true },
+  // routeName: { type: mongoose.Schema.Types.ObjectId, ref: 'Route', required: true },
+  date: { type: String, required: true },
   departureTime: { type: String, required: true }, // Store time as string (e.g., "08:00 AM")
   arrivalTime: { type: String, required: true }, // Same as departure
 //   seatsAvailable: { type: Number, required: true },
@@ -25,8 +26,8 @@ const ScheduleSchema = new mongoose.Schema({
 //     uploadedAt: { type: Date }
 //   },
 
-  createdAt: { type: Date, default: Date.now },
-  updatedAt: { type: Date, default: Date.now },
+  // createdAt: { type: Date, default: Date.now },
+  // updatedAt: { type: Date, default: Date.now },
 }, { timestamps: true });
 
 // Indexing to improve query performance
