@@ -13,13 +13,13 @@ exports.addNewBus = async (req, res) => {
     const {busNumber} = req.body
 
     // check for unique bus number
-    const checkBusExists = await Bus.findOne({busNumber})
+    const checkBusExists = await Bus.find({busNumber})
     if(checkBusExists) return res.status(400).json(sendErrorHandler('55', req))
-      
-    // checkBusExists ? return res.json(sendErrorHandler('50', req)) : ''
+
     // Generate a new UUID
     const newBusId = uuidv4();
     req.body.busId=newBusId
+
     const newBus = new Bus(req.body); // Create a new bus with the data from the request body
     await newBus.save(); // Save the new bus to the database
     res.status(201).json({ message: 'Bus created successfully', data: newBus });
@@ -133,3 +133,8 @@ exports.busSearch = async (req, res) => {
     res.json({ error: error.message })
   }
 }
+
+
+// const {customAlphabet} = require('nanoid')
+// const nanoid =  customAlphabet('ahgjagsjh')
+// nanoid(12)
