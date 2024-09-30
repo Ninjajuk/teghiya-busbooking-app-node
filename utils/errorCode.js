@@ -33,6 +33,10 @@ const api = pathArray.length > 0 ? pathArray[pathArray.length - 1].split("?")[0]
       handlegetRouteById(errorCode, response);
       break;
     }
+    case "addNewBus": {
+      handleaddNewBus(errorCode, response);
+      break;
+    }
     case "searchBus": {
       handleBusSearch(errorCode, response);
       break;
@@ -74,6 +78,17 @@ const handlegetRouteById = (errorCode, response) => {
       response.reason = "Does not find the Bus with the given Route ";
       break;
     }
+  }
+};
+
+
+const handleaddNewBus = (errorCode, response) => {
+  switch (errorCode) {
+    case "55": {
+      response.reason = "Bus is already added. busNumber should be unique";
+      break;
+    }
+
   }
 };
 
