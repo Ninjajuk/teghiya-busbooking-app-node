@@ -5,7 +5,7 @@ const schedulehelper = {
     getScheduleByDateAndRoute: async (req, res) => {
         try {
             const { routeName, dateOfJourney } = req.body
-            // console.log(routeName)
+            
             // Check if routeName and dateOfJourney is empty or not
             if (!routeName || !dateOfJourney) return sendErrorHandler('50', req)
 
