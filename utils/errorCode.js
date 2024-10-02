@@ -115,7 +115,7 @@ const handleBusSearch = (errorCode, response) => {
       break;
     }
     case "103": {
-      response.reason = "Does not find the Bus with the given Route ";
+      response.reason = "Does not find the Bus in this date";
       break;
     }
     case "104": {
