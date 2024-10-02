@@ -12,7 +12,7 @@ router
      .post('/api/v1/deleteBus',deleteBus)   //Remove a specific bus.
      .post('/api/v1/addBusType',addBusType)   // Bus type to check for total seat config and layout
      .post('/api/v1/test',testPerformance)
-     .post('/api/v1/searchBus',busSearch)
+     .post('/api/v1/searchBus',busSearch)  //search bus for the given date in the given route
 
 
 

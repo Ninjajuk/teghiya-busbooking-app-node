@@ -33,14 +33,36 @@ const busHelper = {
 
     getBusAndRouteDetails : async (req,checkSchedule) => {
         try {
-            // const data = checkSchedule.map((item)=>{bus:item.busNumber,routeDetails:item.routeName})
-            const data = checkSchedule.map((item)=>item.routeName)
-            if(data.length===2) return sendErrorHandler('103', req)
-            // if(data){
-            //     const busDetails = await Bus.find({busName:})
-            //     return  busDetails
-            // }
-            return data
+
+       // Extract bus numbers from the checkSchedule data
+       const busNumbers = checkSchedule.map(schedule => schedule.busNumber);
+
+       // Query the database to find bus details based on busNumbers
+       const busDetails = await Bus.find({ busNumber: { $in: busNumbers } });
+
+    // Prepare the route details along with the bus details
+    const routeDetails = checkSchedule.data.map(schedule => {
+        const busDetail = busDetails.find(bus => bus.busNumber === schedule.busNumber);
+        return {
+            busNumber: schedule.busNumber,
+            routeName: schedule.routeName,
+            date: schedule.date,
+            departureTime: schedule.departureTime,
+            arrivalTime: schedule.arrivalTime,
+            scheduleType: schedule.scheduleType,
+            recurrence: schedule.recurrence,
+            busDetail: busDetail || {} // Include bus details or an empty object if not found
+        };
+    });
+
+    // Prepare the response
+    const response = {
+        success: true,
+        data: routeDetails,
+        message: "Bus and route details retrieved successfully"
+    };
+
+    return response;
         } catch (error) {
             
         }
