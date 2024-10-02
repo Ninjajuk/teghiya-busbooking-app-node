@@ -34,50 +34,42 @@ const busHelper = {
     getBusAndRouteDetails : async (req,checkSchedule) => {
         try {
 
-            // Extract bus numbers from the checkSchedule data
+            // Extract bus numbers from the checkSchedule data and Query the database to find bus details based on busNumbers
             const busNumbers = checkSchedule.map(schedule => schedule.busNumber);
-
-
-            const routeName = checkSchedule.map(schedule => schedule.routeName);
-
-
-            // Query the database to find bus details based on busNumbers
             const busDetails = await Bus.find({ busNumber: { $in: busNumbers } });
 
-            // Query the database to find bus details based on busNumbers
-            const routeDetails = await Bus.find({ routeName: { $in: routeName } });
-
-            return {route:routeDetails,bus:busDetails}
-
+            // Query the database to find route Details based on routeName
+            const routeName = checkSchedule.map(schedule => schedule.routeName);
+            const routeDetails = await Route.find({ routeName: { $in: routeName } });
 
 
-             // Prepare the route details along with the bus details
-        const routeDetail = checkSchedule.data.map(schedule => {
-            const busDetail = busDetails.find(bus => bus.busNumber === schedule.busNumber);
-            const routeDetail = routeDetails.find(route => route.routeName === route.routeName);
-            return {
-                busNumber: schedule.busNumber,
-                routeName: schedule.routeName,
-                date: schedule.date,
-                departureTime: schedule.departureTime,
-                arrivalTime: schedule.arrivalTime,
-                scheduleType: schedule.scheduleType,
-                recurrence: schedule.recurrence,
-                busDetail: busDetail || {}, // Include bus details or an empty object if not found
-                routeDetail: routeDetail || {}, // Include bus details or an empty object if not found
+            // Prepare the route details along with the bus details
+            const routeDetail = checkSchedule.map(schedule => {
+                const busDetail = busDetails.find(bus => bus.busNumber === schedule.busNumber);
+                const routeDetail = routeDetails.find(route => route.routeName === schedule.routeName);
+                return {
+                    // busNumber: schedule.busNumber,
+                    // routeName: schedule.routeName,
+                    date: schedule.date,
+                    departureTime: schedule.departureTime,
+                    arrivalTime: schedule.arrivalTime,
+                    scheduleType: schedule.scheduleType,
+                    recurrence: schedule.recurrence,
+                    busDetail: busDetail || {}, // Include bus details or an empty object if not found
+                    routeDetail: routeDetail || {}, // Include route details or an empty object if not found
+                };
+            });
+
+            // Prepare the response
+            const response = {
+                success: true,
+                data: routeDetail,
+                message: "Bus and route details retrieved successfully"
             };
-        });
 
-        // Prepare the response
-        const response = {
-            success: true,
-            data: routeDetails,
-            message: "Bus and route details retrieved successfully"
-        };
-
-        return response;
+            return response;
         } catch (error) {
-            return {code:'10',reson:'failed to fetch'}
+            return { code: '10', reson: 'failed to fetch' }
         }
     }
     

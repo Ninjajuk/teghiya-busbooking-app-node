@@ -129,9 +129,9 @@ exports.busSearch = async (req, res) => {
 
     //Get bus Details and Route details from the checkSchedule
     const busDetails = await busHelper.getBusAndRouteDetails(req, checkSchedule)
-    if (busDetails.code) return res.status(404).json(busDetails)
+    if (busDetails.code) return res.status(404).json(busDetails)   //if error in busDetails return with the error message
 
-    res.json({ data: busDetails })
+    res.json({ busSearchResult:busDetails })
   } catch (error) {
     res.json({ error: error.message })
   }
