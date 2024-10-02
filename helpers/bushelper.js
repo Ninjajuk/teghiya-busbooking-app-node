@@ -34,37 +34,50 @@ const busHelper = {
     getBusAndRouteDetails : async (req,checkSchedule) => {
         try {
 
-       // Extract bus numbers from the checkSchedule data
-       const busNumbers = checkSchedule.map(schedule => schedule.busNumber);
+            // Extract bus numbers from the checkSchedule data
+            const busNumbers = checkSchedule.map(schedule => schedule.busNumber);
 
-       // Query the database to find bus details based on busNumbers
-       const busDetails = await Bus.find({ busNumber: { $in: busNumbers } });
 
-    // Prepare the route details along with the bus details
-    const routeDetails = checkSchedule.data.map(schedule => {
-        const busDetail = busDetails.find(bus => bus.busNumber === schedule.busNumber);
-        return {
-            busNumber: schedule.busNumber,
-            routeName: schedule.routeName,
-            date: schedule.date,
-            departureTime: schedule.departureTime,
-            arrivalTime: schedule.arrivalTime,
-            scheduleType: schedule.scheduleType,
-            recurrence: schedule.recurrence,
-            busDetail: busDetail || {} // Include bus details or an empty object if not found
+            const routeName = checkSchedule.map(schedule => schedule.routeName);
+
+
+            // Query the database to find bus details based on busNumbers
+            const busDetails = await Bus.find({ busNumber: { $in: busNumbers } });
+
+            // Query the database to find bus details based on busNumbers
+            const routeDetails = await Bus.find({ routeName: { $in: routeName } });
+
+            return {route:routeDetails,bus:busDetails}
+
+
+
+             // Prepare the route details along with the bus details
+        const routeDetail = checkSchedule.data.map(schedule => {
+            const busDetail = busDetails.find(bus => bus.busNumber === schedule.busNumber);
+            const routeDetail = routeDetails.find(route => route.routeName === route.routeName);
+            return {
+                busNumber: schedule.busNumber,
+                routeName: schedule.routeName,
+                date: schedule.date,
+                departureTime: schedule.departureTime,
+                arrivalTime: schedule.arrivalTime,
+                scheduleType: schedule.scheduleType,
+                recurrence: schedule.recurrence,
+                busDetail: busDetail || {}, // Include bus details or an empty object if not found
+                routeDetail: routeDetail || {}, // Include bus details or an empty object if not found
+            };
+        });
+
+        // Prepare the response
+        const response = {
+            success: true,
+            data: routeDetails,
+            message: "Bus and route details retrieved successfully"
         };
-    });
 
-    // Prepare the response
-    const response = {
-        success: true,
-        data: routeDetails,
-        message: "Bus and route details retrieved successfully"
-    };
-
-    return response;
+        return response;
         } catch (error) {
-            
+            return {code:'10',reson:'failed to fetch'}
         }
     }
     

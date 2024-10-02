@@ -118,17 +118,20 @@ exports.testPerformance = async(req,res) =>{
 //     res.json({ error: error.message })
 //   }
 // }
+
 exports.busSearch = async (req, res) => {
 
   try {
+
+    //check if the routeName and the date of journey is available or nmot
     const checkSchedule = await schedulehelper.getScheduleByDateAndRoute(req, res)
     if (checkSchedule.code) return res.status(404).json(checkSchedule)
 
     //Get bus Details and Route details from the checkSchedule
-    const busDetails = await busHelper.getBusAndRouteDetails(req,checkSchedule)
+    const busDetails = await busHelper.getBusAndRouteDetails(req, checkSchedule)
     if (busDetails.code) return res.status(404).json(busDetails)
 
-    res.json({ data: busDetails})
+    res.json({ data: busDetails })
   } catch (error) {
     res.json({ error: error.message })
   }
