@@ -76,3 +76,14 @@ const busHelper = {
 
 }
 module.exports ={busHelper}
+
+
+// // Extract bus numbers and route names
+// const busNumbers = checkSchedule.map(schedule => schedule.busNumber);
+// const routeNames = checkSchedule.map(schedule => schedule.routeName);
+
+// // Run both database queries concurrently
+// const [busDetails, routeDetails] = await Promise.all([
+//     Bus.find({ busNumber: { $in: busNumbers } }),
+//     Route.find({ routeName: { $in: routeNames } })
+// ]);

@@ -8,9 +8,7 @@ const BusSchema= new mongoose.Schema({
   busType: { type: String, enum: ['AC', 'Non-AC', 'Sleeper', 'Semi-Sleeper', 'Electric'], required: true }, // Bus type
   totalSeats: { type: Number, required: true }, // Total seats capacity
   //seatsAvailable: { type: Number, required: true }, // Available seats for booking
-  // images: {
-  //   type: String,
-  // },
+
   // Operational Status and Tracking
   status: { type: String, enum: ['active', 'in-maintenance', 'decommissioned', 'reserved'], default: 'active' }, // Operational status
 // reservedBy: { type: String, ref: 'User' }, // If reserved, who reserved it (future use case)
@@ -21,7 +19,11 @@ const BusSchema= new mongoose.Schema({
     assigned: { type: Boolean, default: false }, // Bus currently assigned to a route
    // preferredRoutes: [{ type: String, ref: 'Route' }], // Buses may be preferred for specific routes
   },
-
+  images: [{
+    url: { type: String}, // URL of the image
+    description: { type: String }, // Optional description of the image
+    createdAt: { type: Date, default: Date.now } // Timestamp for the image upload
+  }],
     // Extended Amenities
     amenities: [{
       type: String, 
