@@ -89,12 +89,24 @@ exports.getRouteById = async (req, res) => {
   exports.addPickUpAndDropPoints = async (req,res) =>{
 
     try {
-      const { pickUpDropPointRoute, pickUpDropPointId } = req.body
+      const routeIdentifier = "DEL123456"; // The routeId
+      const route = await Route.findOne({ 
+        $or: [{ routeId: routeIdentifier }, { routeName: routeIdentifier }] 
+    });
 
-      const pickUpAndDropPoint = new PickUpAndDropPoints(req.body)
-      //create new  pickUpAndDropPoint instance
-      await pickUpAndDropPoint.save()
-      res.status(200).json({message: 'Added Successfully',data: pickUpAndDropPoint})
+    if (!route) {
+        throw new Error('Route not found');
+    }
+
+    const pickUpDropPoints = await PickUpAndDropPoints.find({ route: route._id }).populate('route');
+    res.json({pickUpDropPoints})
+    // return pickUpDropPoints;
+
+
+      // const pickUpAndDropPoint = new PickUpAndDropPoints(req.body)
+      // //create new  pickUpAndDropPoint instance
+      // await pickUpAndDropPoint.save()
+      // res.status(200).json({message: 'Added Successfully',data: pickUpAndDropPoint})
     } catch (error) {
       res.status(400).json({error:'error adding pick and drop points',reason:error.message})
     }

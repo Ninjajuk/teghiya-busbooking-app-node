@@ -38,6 +38,9 @@
     "route": [
     ]
     ,
+    "addPickUpAndDropPoints": [
+      
+    ],
     "passengers": [
       {
         "name": "John Doe",
