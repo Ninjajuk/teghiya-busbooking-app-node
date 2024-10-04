@@ -91,9 +91,7 @@ exports.getRouteById = async (req, res) => {
 exports.addPickUpAndDropPoints = async (req, res) => {
   try {
     const { route } = req.body
-    const points = await routeHelper.pickUpAndDropPoint(route)
 
-    return res.json({points})
     //check if it is already there
     const checkRoute = await Route.find({route})
     if(checkRoute) return res.json({reason:'Already present'})

@@ -43,9 +43,10 @@ exports.getAllBus = async (req, res) => {
 exports.getBusById = async (req, res) => {
   try {
     const {busId} = req.body
+    if(!busId) return res.json({reason:'busid required'})
     const bus = await Bus.findOne({busId:busId}); // Find the bus by its ID
     if (!bus) {
-      return res.status(404).json({ message: 'Bus not found' });
+      return res.status(404).json({ message: `Bus not found` });
     }
     res.status(200).json(bus);
   } catch (error) {
