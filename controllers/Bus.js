@@ -142,3 +142,31 @@ exports.busSearch = async (req, res) => {
 // const {customAlphabet} = require('nanoid')
 // const nanoid =  customAlphabet('ahgjagsjh')
 // nanoid(12)
+
+
+
+// Create or update bus layout
+exports.createAndUpdateBusSeatLayout = async (req, res) => {
+  const { busId, layout } = req.body; // layout is a 2D array
+  try {
+      const bus = await Bus.findOneAndUpdate(
+          { busId },
+          { layout },
+          { new: true, upsert: true } // Create if it doesn't exist
+      );
+      res.status(201).json(bus);
+  } catch (error) {
+      res.status(500).json({ error: error.message });
+  }
+}
+
+// const seatSchema = new mongoose.Schema({
+//   status: { type: Number, required: true }, // 0: available, 1: booked, -1: empty space
+//   id: { type: String, required: true },      // Seat ID (e.g., "1A")
+//   price: { type: Number, required: true }    // Seat price
+// });
+
+// const busSchema = new mongoose.Schema({
+//   busId: { type: String, required: true, unique: true },
+//   seatLayout: { type: [[seatSchema]], required: true } // 2D array of seat objects
+// });

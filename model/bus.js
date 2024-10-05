@@ -43,13 +43,10 @@ const BusSchema= new mongoose.Schema({
 
 module.exports= mongoose.model('Bus',BusSchema)
 
-// {    busId: { type: String, default: uuidv4 }, // UUID for scalability
-// busNumber: { type: String, required: true, unique: true }, // Unique bus number
+
 // licensePlate: { type: String, required: true, unique: true }, // Bus license plate
-// capacity: { type: Number, required: true }, // Total seats capacity
+
 // seatsAvailable: { type: Number, required: true }, // Available seats for booking
-// busType: { type: String, enum: ['AC', 'Non-AC', 'Sleeper', 'Semi-Sleeper'], required: true }, // Bus type
-// operator: { type: String, required: true }, // Operator or company name
 
 // // Extended Amenities
 // amenities: [{
@@ -124,4 +121,11 @@ module.exports= mongoose.model('Bus',BusSchema)
 //   "description": "Current operational status of the bus."
 // },
 
+// }
+
+//Bus seat Layout schema for 2d array
+// busId: { type: String, required: true, unique: true },
+// layout: {
+//     type: [[Number]], // 2D array: 0 for empty space, 1 for available seat, 2 for booked seat
+//     required: true
 // }
