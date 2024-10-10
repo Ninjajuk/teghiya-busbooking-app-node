@@ -85,6 +85,10 @@ const handlegetRouteById = (errorCode, response) => {
 const handleaddNewBus = (errorCode, response) => {
   switch (errorCode) {
     case "55": {
+      response.reason = "operatorName is required";
+      break;
+    }
+    case "56": {
       response.reason = "Bus is already added. busNumber should be unique";
       break;
     }

@@ -10,11 +10,12 @@ const { default: axios } = require('axios');
 exports.addNewBus = async (req, res) => {
   try {
     
-    const {busNumber} = req.body
+    const {busNumber,operatorName} = req.body
 
+    if (!operatorName) return res.status(400).json(sendErrorHandler('55', req))
     // check for unique bus number
     const checkBusExists = await Bus.find({busNumber})
-    if(checkBusExists) return res.status(400).json(sendErrorHandler('55', req))
+    if(checkBusExists) return res.status(400).json(sendErrorHandler('56', req))
 
     // Generate a new UUID
     const newBusId = uuidv4();
