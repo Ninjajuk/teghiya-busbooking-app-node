@@ -10,7 +10,7 @@ const { default: axios } = require('axios');
 exports.addNewBus = async (req, res) => {
   try {
     
-    const {busNumber,operatorName} = req.body
+    const {busNumber,operatorName,busType} = req.body
 
     if (!operatorName) return res.status(400).json(sendErrorHandler('55', req))
     // check for unique bus number
