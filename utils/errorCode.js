@@ -89,7 +89,7 @@ const handleaddNewBus = (errorCode, response) => {
       break;
     }
     case "56": {
-      response.reason = "Same Bus Number is already added. busNumber should be unique";
+      response.reason = "Same Bus Number is already present. busNumber should be unique";
       break;
     }
 
